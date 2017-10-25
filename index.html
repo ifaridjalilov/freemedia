@@ -26,10 +26,6 @@
       color: #888;
     }
 
-    .user img {
-      width: 15%;
-    }
-
     .messenger {
       position: relative;
       height: 100vh;
@@ -52,8 +48,30 @@
       position: absolute;
       top: 10px;
       right: 10px;
-      font-size: 22px;
+      font-size: 21px;
       color: #777;
+    }
+
+    .messages {
+      height: 90vh;
+      overflow: scroll;
+    }
+
+    .message {
+      display: inline-block;
+      border-radius: 15px;
+      color: #555;
+      padding: 14px 24px;
+      box-shadow: 0px 8px 20px 0 rgba(0,0,0,0.1),
+                  8px 0px 30px 0 rgba(0, 0, 0, 0.05),
+                  5px 5px 12px 0 rgba(0, 0, 0, 0.05);
+      max-width: 80%;
+    }
+
+    .message .time {
+      color: #bbb;
+      margin: 5px 0;
+      font-size: 14px;
     }
   </style>
 </head>
@@ -62,12 +80,17 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-12 col-sm-4">
-        <div class="users">
 
+        <div class="users">
         </div>
+
       </div>
       <div class="col-12 col-sm-8">
         <div class="messenger w-100">
+
+          <div class="messages">
+          </div>
+          
           <div class="input-area w-100">
             <textarea class="w-100" rows="1" onkeyup="textAreaAdjust(this)" placeholder="Enter a message..."></textarea>
             <i class="fa fa-smile-o emoji-icons" aria-hidden="true"></i>
@@ -89,11 +112,25 @@
   // $('#messenger').css('overflow', 'hidden').autogrow()
   $(document).ready(function(e){
     for (var i = 0; i < 10; i++) {
+      var time = new Date();
+      $(".messages").append('\
+        <div class="row mt-4">\
+          <div class="col-1">\
+            <img class="d-flex mr-2 mt-1 mb-1 rounded-circle img-fluid" src="'+faker.image.avatar()+'" alt="'+faker.name.findName()+' Avatar">\
+          </div>\
+          <div class="col-11">\
+            <div class="message">\
+              '+faker.lorem.sentence()+'\
+              <p class="time"><b>'+time.getHours()+':'+(time.getMinutes()+i)+'</b></p>\
+            </div>\
+          </div>\
+        </div>'
+      );
       $(".users").append('\
         <div class="card mb-1 user">\
           <div class="card-body">\
             <div class="media">\
-              <img class="d-flex mr-3 rounded-circle" src="'+faker.image.avatar()+'" alt="'+faker.name.findName()+' Avatar">\
+              <img class="d-flex mr-3 rounded-circle img-fluid" src="'+faker.image.avatar()+'" alt="'+faker.name.findName()+' Avatar">\
               <div class="media-body align-items-center">\
                 <h5 class="mt-0">'+faker.name.findName()+'</h5>\
                 <p class="last-message">'+faker.lorem.sentences().substring(0, 40)+'...</p>\
